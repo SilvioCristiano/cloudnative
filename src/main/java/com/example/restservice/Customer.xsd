@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Customer" xmlns:tns="http://www.example.org/Customer" elementFormDefault="qualified">
+
+
+    <complexType name="PessoaType">
+    	<sequence>
+    		<element name="Nome" type="string"></element>
+    		<element name="CPF" type="string"></element>
+    		<element name="address" type="tns:AddressType"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="AddressType">
+    	<sequence>
+    		<element name="Rua" type="string"></element>
+    		<element name="cep" type="string"></element>
+    	</sequence>
+    </complexType>
+
+    <element name="Customer" type="tns:PessoaType"></element>
+</schema>

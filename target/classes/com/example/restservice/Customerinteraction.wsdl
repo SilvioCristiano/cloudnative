@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/Customerinteraction/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Customerinteraction" targetNamespace="http://www.example.org/Customerinteraction/" xmlns:xsd1="http://www.example.org/Customer">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.example.org/Customerinteraction/">
+      <xsd:element name="EnvioSMS">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="EnvioSMSResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    	<xsd:import namespace="http://www.example.org/Customer"
+    		schemaLocation="Customer.xsd">
+    	</xsd:import></xsd:schema></wsdl:types>
+  <wsdl:message name="EnvioSMSRequest">
+    <wsdl:part element="xsd1:Customer" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="EnvioSMSResponse">
+    <wsdl:part element="tns:EnvioSMSResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="Customerinteraction">
+    <wsdl:operation name="EnvioSMS">
+      <wsdl:input message="tns:EnvioSMSRequest"/>
+      <wsdl:output message="tns:EnvioSMSResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CustomerinteractionSOAP" type="tns:Customerinteraction">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="EnvioSMS">
+      <soap:operation soapAction="http://www.example.org/Customerinteraction/EnvioSMS"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Customerinteraction">
+    <wsdl:port binding="tns:CustomerinteractionSOAP" name="CustomerinteractionSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
