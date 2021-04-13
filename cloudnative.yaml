@@ -17,7 +17,7 @@ spec:
         image: iad.ocir.io/oraclemetodista/ocir-repo/cloudnative:latest 
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080 #Endpoint is at port 80 in the container
+        - containerPort: 8081 #Endpoint is at port 80 in the container
       imagePullSecrets:
       - name: ocirsecret
 ---
