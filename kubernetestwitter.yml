@@ -46,6 +46,7 @@ metadata:
     app: cloud-k8s-deployment
     commit: ${GIT_COMMIT}
 spec:
+  type: LoadBalancer #Exposes the service as a node port
   ports:
   - port: 30000
     targetPort: 8080
@@ -53,4 +54,5 @@ spec:
     app: cloud-k8s-deployment
     color: blue
   type: ClusterIP
+
 ---
