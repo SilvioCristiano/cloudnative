@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cloud-k8s-deployment
-        image: gru.ocir.io/grpufqffnblh/ocir-repo/cloud:latest
+        image: iad.ocir.io/oraclemetodista/ocir-repo/cloudnative:latest 
         imagePullPolicy: Always
         ports:
         - containerPort: 8080 #Endpoint is at port 80 in the container
