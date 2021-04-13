@@ -20,7 +20,7 @@ spec:
     projected:
       sources:
       - secret:
-          name: jenkins-docker-cfg
+          name: ocirsecret
           items:
             - key: .dockerconfigjson
               path: config.json               
@@ -35,7 +35,7 @@ spec:
       git 'https://github.com/SilvioCristiano/cloudnative.git'
       container(name: 'kaniko', shell: '/busybox/sh') {
           sh '''#!/busybox/sh
-          /kaniko/executor -f Dockerfile -c `pwd` --destination=jacksonlima91/forum-app:$BUILD_NUMBER 
+          /kaniko/executor -f Dockerfile -c `pwd` --destination=iad.ocir.io/oraclemetodista/ocir-repo/cloudnative:$BUILD_NUMBER 
           '''
       }
     }
