@@ -28,7 +28,7 @@ metadata:
 spec:
   type: LoadBalancer #Exposes the service as a node port
   ports:
-  - port: 8080
+  - port: 8081
     protocol: TCP
     targetPort: 8080
   selector:
