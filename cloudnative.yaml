@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-k8s-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cloud-k8s-deployment
+  replicas: 3 # deployment runs 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: cloud-k8s-deployment
+    spec:
+      containers:
+      - name: cloud-k8s-deployment
+        image: gru.ocir.io/grpufqffnblh/ocir-repo/cloud:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080 #Endpoint is at port 80 in the container
+      imagePullSecrets:
+      - name: ocirsecret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-k8s-deployment
+spec:
+  type: LoadBalancer #Exposes the service as a node port
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: cloud-k8s-deployment
