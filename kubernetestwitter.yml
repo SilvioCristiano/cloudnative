@@ -1,58 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cloud-k8s-deployment-v1
-  labels:
-    commit: ${GIT_COMMIT}
+  name: cloud-k8s-deployment
 spec:
-  replicas: 2
   selector:
     matchLabels:
       app: cloud-k8s-deployment
-  template:
+  replicas: 3 # deployment runs 2 pods matching the template
+  template: # create pods using pod definition in this template
     metadata:
       labels:
         app: cloud-k8s-deployment
-        commit: ${GIT_COMMIT}
-        color: blue
     spec:
       containers:
       - name: cloud-k8s-deployment
-        image: iad.ocir.io/oraclemetodista/ocir-repo/cloudnative:${GIT_COMMIT}
+        image: iad.ocir.io/oraclemetodista/ocir-repo/cloudnative:latest
         imagePullPolicy: Always
         ports:
-        - name: cloud-k8s-deployment
-          containerPort: 8080
-          protocol: TCP
-        volumeMounts:
-          - name: podinfo
-            mountPath: /tmp
-            readOnly: false
-      volumes:
-        - name: podinfo
-          downwardAPI:
-            items:
-            - path: "labels"
-              fieldRef:
-                fieldPath: metadata.labels 
+        - containerPort: 8080 #Endpoint is at port 80 in the container
       imagePullSecrets:
-        - name: ocirsecret
+      - name: ocirsecret
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: cloud-k8s-deployment
-  labels:
-    app: cloud-k8s-deployment
-    commit: ${GIT_COMMIT}
 spec:
   type: LoadBalancer #Exposes the service as a node port
   ports:
-  - port: 30000
+  - port: 8080
+    protocol: TCP
     targetPort: 8080
   selector:
     app: cloud-k8s-deployment
-    color: blue
-  type: ClusterIP
-
----
